@@ -79,7 +79,7 @@ $base_url = 'https://bloodlinks.in';
    <div class="container">
       <div class="row">
          <div class="col-lg-12">
-            <h3 class="text-center ">Register Blood Bank</h3>
+            <h1 class="text-center " style="color: #000;">Register Blood Bank</h1>
             <hr class="details-hr-1">
          </div>
       </div>
