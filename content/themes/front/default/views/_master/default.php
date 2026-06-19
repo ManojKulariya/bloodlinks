@@ -5,9 +5,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <?php
+        $CI =& get_instance();
+
+        $slug = trim($CI->uri->uri_string(), '/');
+
+        $seo = $CI->db
+            ->where('slug', $slug)
+            ->where('status', 1)
+            ->get('seo_meta')
+            ->row();
+        ?>
+
+        <meta name="title" content="<?= !empty($seo->meta_title) ? $seo->meta_title : 'Find Blood Bank Near Me | Donate & Request Blood | BloodLinks'; ?>">
+
+        <meta name="description" content="<?= !empty($seo->meta_description) ? $seo->meta_description : 'Find blood banks near me, donate blood & request blood across India. Locate hospitals & blood camps instantly. Download BloodLinks app now!'; ?>">
+
+        <title><?= !empty($seo->meta_title) ? $seo->meta_title : Events::trigger('the_title', $title, 'string'); ?></title>
     <link rel="icon" href="<?php echo $favicon_image;?>">
   	<?php echo @$metadata; ?>
-    <title><?php echo Events::trigger('the_title', $title, 'string');?></title>
 
   	<?php echo @$css_files; ?>
     <script type="text/javascript">
