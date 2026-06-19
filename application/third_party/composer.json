@@ -1,0 +1,6 @@
+{
+    "require": {
+        "yohang88/letter-avatar": "^2.2",
+        "phpoffice/phpspreadsheet": "1.21.0"
+    }
+}

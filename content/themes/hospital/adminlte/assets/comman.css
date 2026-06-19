@@ -1,0 +1,26 @@
+
+  table.dataTable thead>tr>th.sorting_asc,
+  table.dataTable thead>tr>th.sorting_desc,
+  table.dataTable thead>tr>th.sorting,
+  table.dataTable thead>tr>td.sorting_asc,
+  table.dataTable thead>tr>td.sorting_desc,
+  table.dataTable thead>tr>td.sorting {
+    padding-right: 15px;
+    font-size: 12px;
+  }
+
+  table.dataTable tbody th,
+  table.dataTable tbody td {
+    padding: 6px !important;
+    font-size: 14px;
+  }
+
+  .btn-xs {
+    padding: 2px;
+    font-size: 10px;
+  }
+
+  table.dataTable thead th,
+  table.dataTable thead td {
+    padding: 0 15px !important;
+  }

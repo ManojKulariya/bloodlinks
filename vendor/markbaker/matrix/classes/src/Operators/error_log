@@ -1,0 +1,80 @@
+[23-Apr-2026 07:45:51 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php on line 8
+[23-Apr-2026 07:45:51 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php on line 8
+[23-Apr-2026 07:45:53 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php on line 8
+[23-Apr-2026 07:45:55 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Addition.php on line 8
+[23-Apr-2026 07:45:56 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php on line 8
+[23-Apr-2026 07:45:57 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php on line 8
+[23-Apr-2026 07:45:58 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php on line 8
+[23-Apr-2026 07:46:01 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Subtraction.php on line 8
+[23-Apr-2026 07:46:02 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php on line 10
+[23-Apr-2026 07:46:02 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php on line 10
+[23-Apr-2026 07:46:04 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php on line 10
+[23-Apr-2026 07:46:06 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Multiplication.php on line 10
+[23-Apr-2026 07:46:07 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php on line 8
+[23-Apr-2026 07:46:08 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php on line 8
+[23-Apr-2026 07:46:09 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php on line 8
+[23-Apr-2026 07:46:12 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Operator" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/DirectSum.php on line 8
+[23-Apr-2026 07:46:12 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Multiplication" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php on line 10
+[23-Apr-2026 07:46:13 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Multiplication" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php on line 10
+[23-Apr-2026 07:46:14 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Multiplication" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php on line 10
+[23-Apr-2026 07:46:17 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Operators\Multiplication" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/classes/src/Operators/Division.php on line 10

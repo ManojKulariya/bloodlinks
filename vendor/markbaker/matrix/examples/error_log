@@ -1,0 +1,24 @@
+[23-Apr-2026 07:45:36 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:36 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:36 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Matrix" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 18
+[23-Apr-2026 07:45:37 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:37 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:37 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Matrix" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 18
+[23-Apr-2026 07:45:38 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:38 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:38 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Matrix" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 18
+[23-Apr-2026 07:45:41 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:41 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/matrix/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 6
+[23-Apr-2026 07:45:41 UTC] PHP Fatal error:  Uncaught Error: Class "Matrix\Matrix" not found in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/matrix/examples/test.php on line 18

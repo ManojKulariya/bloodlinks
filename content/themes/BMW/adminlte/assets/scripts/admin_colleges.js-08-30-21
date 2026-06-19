@@ -1,0 +1,3117 @@
+jQuery(function($) {
+  'use strict';
+  
+   $('[data-toggle="tooltip"]').tooltip()
+
+   // This set of validators requires the File API, so if we'ere in a browser
+    // that isn't sufficiently "HTML5"-y, don't even bother creating them.  It'll
+    // do no good, so we just automatically pass those tests.
+    var is_supported_browser = !!window.File,
+        fileSizeToBytes,
+        formatter = $.validator.format;
+
+    /**
+     * Converts a measure of data size from a given unit to bytes.
+     *
+     * @param number size
+     *   A measure of data size, in the give unit
+     * @param string unit
+     *   A unit of data.  Valid inputs are "B", "KB", "MB", "GB", "TB"
+     *
+     * @return number|bool
+     *   The number of bytes in the above size/unit combo.  If an
+     *   invalid unit is specified, false is returned
+     */
+    fileSizeToBytes = (function () {
+
+        var units = ["B", "KB", "MB", "GB", "TB"];
+
+        return function (size, unit) {
+
+            var index_of_unit = units.indexOf(unit),
+                coverted_size;
+
+            if (index_of_unit === -1) {
+
+                coverted_size = false;
+
+            } else {
+
+                while (index_of_unit > 0) {
+                    size *= 1024;
+                    index_of_unit -= 1;
+                }
+
+                coverted_size = size;
+            }
+
+            return coverted_size;
+        };
+    }());
+
+  $.validator.addMethod("valueNotEquals", function(value, element, arg){
+    return arg !== value;
+  }, "Value must not equal arg.");
+
+  jQuery.validator.addMethod("alphanumeric", function(value, element) {
+    return this.optional(element) || /^[\w.]+$/i.test(value);
+  }, "Letters, numbers, and underscores only please");
+
+  $.validator.addMethod('filesize', function (value, element, param) {
+    return this.optional(element) || (element.files[0].size <= param)
+  }, 'File size must be less than {0}');
+
+  $.validator.addMethod("roles", function(value, elem, param) {
+   return $(".roles:checkbox:checked").length > 0;
+  },"You must select at least one!");
+
+  jQuery.validator.addMethod('ytVidId',function(value, element, arg){
+     return this.optional(element) || /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/.test(value);
+  },"URL is not a valid Youtube video url.");
+
+
+   //Tinymce editor
+  if ($(".college_info").length) {
+    tinymce.init({
+      selector: '.college_info',
+      entity_encoding : "raw",
+      height: 400,
+      theme: 'silver',
+      plugins: [
+        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen',
+      ],
+      toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
+      target_list: false,
+      image_advtab: true,
+      templates: [{
+          title: 'Test template 1',
+          content: 'Test 1'
+        },
+        {
+          title: 'Test template 2',
+          content: 'Test 2'
+        }
+      ],
+      content_css: []
+    });
+  }
+
+  if ($(".review_detail").length) {
+    tinymce.init({
+      selector: '.review_detail',
+      entity_encoding : "raw",
+      height: 250,
+      theme: 'silver',
+      plugins: [
+        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen',
+      ],
+      toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+      target_list: false,
+      image_advtab: true,
+      templates: [{
+          title: 'Test template 1',
+          content: 'Test 1'
+        },
+        {
+          title: 'Test template 2',
+          content: 'Test 2'
+        }
+      ],
+      content_css: []
+    });
+  }
+
+
+  $.validator.addMethod(
+      "minFileSize",
+      function (value, element, params) {
+
+          var files,
+              unit = params.unit || "KB",
+              size = params.size || 100,
+              min_file_size = fileSizeToBytes(size, unit),
+              is_valid = false;
+
+          if (!is_supported_browser || this.optional(element)) {
+
+              is_valid = true;
+
+          } else {
+
+              files = element.files;
+
+              if (files.length < 1) {
+
+                  is_valid = false;
+
+              } else {
+
+                  is_valid = files[0].size >= min_file_size;
+
+              }
+          }
+
+          return is_valid;
+      },
+      function (params, element) {
+          return formatter(
+              "File must be at least {0}{1} large.",
+              [params.size || 100, params.unit || "KB"]
+          );
+      }
+  );
+
+  $.validator.addMethod(
+        "maxFileSize",
+        function (value, element, params) {
+
+            var files,
+                unit = params.unit || "KB",
+                size = params.size || 100,
+                max_file_size = fileSizeToBytes(size, unit),
+                is_valid = false;
+
+            if (!is_supported_browser || this.optional(element)) {
+
+                is_valid = true;
+
+            } else {
+
+                files = element.files;
+
+                if (files.length < 1) {
+
+                    is_valid = false;
+
+                } else {
+
+                    is_valid = files[0].size <= max_file_size;
+
+                }
+            }
+
+            return is_valid;
+        },
+        function (params, element) {
+            return formatter(
+                "File cannot be larger than {0}{1}.",
+                [params.size || 100, params.unit || "KB"]
+            );
+        }
+  );
+
+
+  $.validator.addMethod('minImageWidth', function(value, element, minWidth) {
+    return ($(element).data('imageWidth') || 0) >= minWidth;
+  }, function(minWidth, element) {
+    var imageWidth = $(element).data('imageWidth');
+    return (imageWidth!="")
+      ? ("Your image's width must be greater than " + minWidth + "px")
+      : "Selected file is not an image.";
+  });
+
+  $.validator.addMethod('minImageHeight', function(value, element, minWidth) {
+    return ($(element).data('imageHeight') || 0) >= minHeight;
+  }, function(minHeight, element) {
+    var imageHeight = $(element).data('imageHeight');
+    return (imageHeight)
+      ? ("Your image's width must be greater than " + minHeight + "px")
+      : "Selected file is not an image.";
+  });
+
+ 
+
+  //Colleges
+  if(_college==''){
+    // var college_list_table=$('#college_list_table').DataTable({ 
+    //     'bJQueryUI': false,
+    //     'stateSave': true,
+    //     'iDisplayLength':50,
+    //     'responsive': true,
+    //     "pagingType": "full_numbers",
+    //     'language': {
+    //       'paginate': {
+    //         'first': "<<", // This is the link to the first page
+    //         'previous': "<", // This is the link to the previous page
+    //         'next': ">", // This is the link to the next page
+    //         'last': ">>" // This is the link to the last page
+    //       }
+    //     },
+    //     "lengthMenu": [[10,25,50,100,250,500,1000,1500], [10,25,50,100,250,500,1000,1500]],
+    //     "processing": true, //Feature control the processing indicator.
+    //     "serverSide": true, //Feature control DataTables' server-side processing mode.
+    //     "order": [], //Initial no order.
+    //     // Load data for the table's content from an Ajax source
+    //     "ajax": {
+    //         "url": base_url+'/institutions/colleges/search',
+    //         "type": "POST",
+    //         "data":{csrf_test_name:csrf_hash,state_id:$('#search_college_state :selected').val()}
+    //     },
+    //     //Set column definition initialisation properties.
+    //     "columnDefs": [
+    //     { 
+    //         "targets": [ 0 ], //first column / numbering column
+    //         "orderable": false, //set not orderable
+    //     },
+    //     ],
+    // });
+
+      loadColleges_table($('#search_college_state :selected').val(),$('#inst_type :selected').val());
+
+      $('body').on('change','#inst_type',function(){
+        var state=$('#search_college_state :selected').val();
+        var type=$('#inst_type :selected').val();
+        var stream=$('#inst_type :selected').val();
+
+        $('#college_list_table').DataTable().destroy();
+        loadColleges_table(state,type,stream);
+      });
+
+      $('body').on('change','#inst_courses',function(){
+        var state=$('#search_college_state :selected').val();
+        var type=$('#inst_type :selected').val();
+        var stream=$('#inst_type :selected').val();
+
+        $('#college_list_table').DataTable().destroy();
+        loadColleges_table(state,type,stream);
+      });
+
+      function loadColleges_table(state,inst_type,inst_courses){
+        var college_list_table=$('#college_list_table').DataTable({ 
+          'bJQueryUI': false,
+          'stateSave': true,
+          'iDisplayLength':50,
+          'responsive': true,
+          "pagingType": "full_numbers",
+          'language': {
+            'paginate': {
+              'first': "<<", // This is the link to the first page
+              'previous': "<", // This is the link to the previous page
+              'next': ">", // This is the link to the next page
+              'last': ">>" // This is the link to the last page
+            }
+          },
+          "lengthMenu": [[10,25,50,100,250,500,1000,1500], [10,25,50,100,250,500,1000,1500]],
+          "processing": true, //Feature control the processing indicator.
+          "serverSide": true, //Feature control DataTables' server-side processing mode.
+          "order": [], //Initial no order.
+          // Load data for the table's content from an Ajax source
+          "ajax": {
+              "url": base_url+'/institutions/colleges/search',
+              "type": "POST",
+              "data":{csrf_test_name:csrf_hash,state_id:state,inst_type:inst_type,inst_courses:inst_courses}
+          },
+          //Set column definition initialisation properties.
+          "columnDefs": [
+          { 
+              "targets": [ 0 ], //first column / numbering column
+              "orderable": false, //set not orderable
+          },
+          ],
+      });
+    }
+
+    $('body').on('change','#search_college_state',function(){
+      // var table=$('#college_list_table').DataTable();
+      // table.ajax.reload( null, false );
+
+      var state=$('#search_college_state :selected').val();
+
+      $('#college_list_table').DataTable().destroy();
+
+      loadColleges_table(state);
+    });
+
+    $('a.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = college_list_table.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+    });
+
+
+    $('body').on('click','.btn_courses_offered',function(){
+      var college=$(this).attr('data-college');
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/colleges/get_courses',
+        data:{csrf_test_name:csrf_hash,college:college,selction_type:'selectbox'},
+        success:function(d){
+          if(d.html!=''){
+            $('#courseModal').find('#btn_add_courses_to_college').attr('disabled',false);
+            $('#courseModal').find('#college').val(college);
+          }
+
+          $('#courseModal').find('form #college_courses').html(d.html);
+          $('#courseModal').find('form #college_courses').trigger("chosen:updated");         
+        }
+      });
+      // $.ajax({
+      //   type:'POST',
+      //   url:base_url+'/institutions/colleges/get_courses',
+      //   data:{csrf_test_name:csrf_hash,college:college},
+      //   success:function(d){
+      //     if(d.html!=''){
+      //       $('#courseModal').find('#btn_add_courses_to_college').attr('disabled',false);
+      //       $('#courseModal').find('#college').val(college);
+      //     }
+
+      //     $('#courseModal').find('form .row#courses_offered_row').html(d.html);          
+      //   }
+      // });
+    });
+
+
+    // $('#courseModal').on('shown.bs.modal', function (e){
+    //   var college=$('#courseModal').find('#college').val();
+    //   $.ajax({
+    //     type:'POST',
+    //     url:base_url+'/institutions/colleges/get_courses',
+    //     data:{csrf_test_name:csrf_hash,college:college,selction_type:'selectbox'},
+    //     success:function(d){
+    //       if(d.html!=''){
+    //         $('#courseModal').find('#btn_add_courses_to_college').attr('disabled',false);
+    //         $('#courseModal').find('#college').val(college);
+    //       }
+
+    //       $('#courseModal').find('form #college_courses').html(d.html);
+    //       $('#courseModal').find('form #college_courses').trigger("chosen:updated");         
+    //     }
+    //   });
+    // });
+
+
+    $('body').on('click','.btn_quick_data_update',function(){
+      var college=$(this).attr('data-college');
+      var college_name=$(this).attr('data-college_name');
+      var college_ph=$(this).attr('data-college_ph');
+      var college_email=$(this).attr('data-college_email');
+      var college_estd=$(this).attr('data-college_estd');
+
+      var college_pincode=$(this).attr('data-college_pincode');
+      var college_address=$(this).attr('data-college_address');
+
+      var college_logo_name=$(this).attr('data-logo_name');
+      var college_banner_name=$(this).attr('data-banner_name');
+
+      //alert(college_pincode);
+
+      $('#collegeQuickUpdateModal').find('#_college_id').val(college);
+      $('#collegeQuickUpdateModal').find('#college_name').val(college_name);
+      $('#collegeQuickUpdateModal').find('#college_phone').val(college_ph);
+
+      $('#collegeQuickUpdateModal').find('#college_email').val(college_email);
+      $('#collegeQuickUpdateModal').find('#college_estd').val(college_estd);
+      $('#collegeQuickUpdateModal').find('input[name="college_pincode"]').val(college_pincode);
+      $('#collegeQuickUpdateModal').find('textarea[name="college_address"]').text(college_address);
+
+      $('#collegeQuickUpdateModal').find('#college_logo_name').val(college_logo_name);
+      $('#collegeQuickUpdateModal').find('#college_banner_name').val(college_banner_name);
+
+      $('#collegeQuickUpdateModal').find('#collegeQuickUpdateModalTitle').html('Update '+college_name);
+    });
+
+    $('body').on('keyup','#search_param_course',function(){
+      var sr=$('#search_param_course').val();
+      var college=$('#college').val();
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/colleges/get_courses',
+        data:{csrf_test_name:csrf_hash,college:college,_search_param:sr},
+        success:function(d){
+          if(d.html!=''){
+            $('#courseModal').find('#btn_add_courses_to_college').attr('disabled',false);
+            $('#courseModal').find('#college').val(college);
+          }
+
+          $('#courseModal').find('form .row#courses_offered_row').html(d.html);          
+        }
+      });
+    });
+
+    $('body').on('click','.btn_categories',function(){
+      var college=$(this).attr('data-college');
+      var college_country=$(this).attr('data-college_country');
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/colleges/get_categories',
+        data:{csrf_test_name:csrf_hash,college:college,college_country:college_country},
+        success:function(d){
+          if(d.html!=''){
+            $('#categoriesModal').find('#btn_add_categories_to_college').attr('disabled',false);
+            $('#categoriesModal').find('#college').val(college);
+          }
+
+          $('#categoriesModal').find('form .row').html(d.html);
+          
+        }
+      });
+    });
+
+
+    $('#form_college_courses').validate({
+      rules:{
+        "course_streams[]":{
+          required: true, 
+          minlength: 1
+        }
+      }, 
+      messages: { 
+        "course_streams[]": "Please select at least one course."
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/assign_courses',
+          data:$('#form_college_courses').serialize(),
+          beforeSend:function(){
+            $('#btn_add_courses_to_college').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(d){
+            if(d.success){
+              Swal.fire({
+                icon: 'success',
+                title: d.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_list_table').DataTable();
+              table.ajax.reload( null, false );
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: d.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          },
+          complete:function(){
+            $('#btn_add_courses_to_college').html('Update').prop('disabled',false);
+          }
+        });
+      }
+    });
+
+
+    $('#form_college_categories').validate({
+      rules:{
+        "college_categories[]":{
+          required: true, 
+          minlength: 1
+        }
+      }, 
+      messages: { 
+        "college_categories[]": "Please select at least one category."
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/assign_categories',
+          data:$('#form_college_categories').serialize(),
+          beforeSend:function(){
+            $('#btn_add_categories_to_college').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(d){
+            if(d.success){
+              Swal.fire({
+                icon: 'success',
+                title: d.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_list_table').DataTable();
+              table.ajax.reload( null, false );
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: d.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          },
+          complete:function(){
+            $('#btn_add_categories_to_college').html('Update').prop('disabled',false);
+          }
+        });
+      }
+    });
+
+
+    $('body').on('click','.btn_change_single_data',function(){
+      var _college=$(this).attr('data-college');
+      var _field=$(this).attr('data-field');
+      var _field_data=$(this).attr('data-field_value');
+
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/colleges/update_single',
+        data:{csrf_test_name:csrf_hash,_college:_college,_field:_field,_field_data:_field_data},
+        success:function(d){
+          if(d.success){
+            Swal.fire({
+              icon: 'success',
+              title: d.success,
+              confirmButtonText:'Close',
+              allowOutsideClick: false,
+            });
+            var table=$('#college_list_table').DataTable();
+            table.ajax.reload( null, false );
+          }else if(d.error){
+            Swal.fire({
+              icon: 'error',
+              title: d.error,
+              confirmButtonText:'Close',
+              allowOutsideClick: false,
+            });
+          }
+        }
+      });
+    });
+
+
+     $('body').on('click','.btn_change_featured_college_menu_data',function(){
+        var _college_name=$(this).attr('data-college_name');
+
+        $('#featuredCollegeModal').find('.modal-title').html(_college_name);
+     });
+
+
+  }
+   
+
+  if(_college!=''){
+    if ($(".js-example-basic-single").length) {
+      $(".js-example-basic-single").select2();
+    }
+
+    $('#college_menu_type_list_table').DataTable({ 
+        'bJQueryUI': false,
+        'stateSave': true,
+        'iDisplayLength':50,
+        'responsive': true,
+        "pagingType": "full_numbers",
+        'language': {
+          'paginate': {
+            'first': "<<", // This is the link to the first page
+            'previous': "<", // This is the link to the previous page
+            'next': ">", // This is the link to the next page
+            'last': ">>" // This is the link to the last page
+          }
+        },
+        "lengthMenu": [[10,25,50,100,250,500,1000,1500], [10,25,50,100,250,500,1000,1500]],
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": base_url+'/institutions/colleges/inner_menu_serach',
+            "type": "POST",
+            "data":{csrf_test_name:csrf_hash,_college:_college}
+        },
+        //Set column definition initialisation properties.
+        "columnDefs": [
+        { 
+            "targets": [ 0 ], //first column / numbering column
+            "orderable": false, //set not orderable
+        },
+        ],
+    });
+
+    $('#college_gallery_list_table').DataTable({ 
+        'bJQueryUI': false,
+        'stateSave': true,
+        'iDisplayLength':50,
+        'responsive': true,
+        "pagingType": "full_numbers",
+        'language': {
+          'paginate': {
+            'first': "<<", // This is the link to the first page
+            'previous': "<", // This is the link to the previous page
+            'next': ">", // This is the link to the next page
+            'last': ">>" // This is the link to the last page
+          }
+        },
+        "lengthMenu": [[10,25,50,100,250,500,1000,1500], [10,25,50,100,250,500,1000,1500]],
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": base_url+'/institutions/colleges/gallery_search',
+            "type": "POST",
+            "data":{csrf_test_name:csrf_hash,_college:_college}
+        },
+        //Set column definition initialisation properties.
+        "columnDefs": [
+        { 
+            "targets": [ 0 ], //first column / numbering column
+            "orderable": false, //set not orderable
+        },
+        ],
+    });
+
+
+    $('#college_faculties_list_table').DataTable({ 
+        'bJQueryUI': false,
+        'stateSave': true,
+        'iDisplayLength':50,
+        'responsive': true,
+        "pagingType": "full_numbers",
+        'language': {
+          'paginate': {
+            'first': "<<", // This is the link to the first page
+            'previous': "<", // This is the link to the previous page
+            'next': ">", // This is the link to the next page
+            'last': ">>" // This is the link to the last page
+          }
+        },
+        "lengthMenu": [[10,25,50,100,250,500,1000,1500], [10,25,50,100,250,500,1000,1500]],
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": base_url+'/institutions/colleges/faculty_search',
+            "type": "POST",
+            "data":{csrf_test_name:csrf_hash,_college:_college}
+        },
+        //Set column definition initialisation properties.
+        "columnDefs": [
+        { 
+            "targets": [ 0 ], //first column / numbering column
+            "orderable": false, //set not orderable
+        },
+        ],
+    });
+
+
+    $('body').on('click','.btn_update_college_inner_menu',function(){
+      var cid=$(this).attr('data-cid');
+      var menu_id=$(this).attr('data-aid');
+      var menu_type_name=$(this).attr('data-menu_name');
+
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/colleges/inner_menu_update',
+        data:{csrf_test_name:csrf_hash,cid:cid,menu_id:menu_id,menu_type_name:menu_type_name},
+        success:function(d){
+          if(d.success){
+            var table=$('#college_menu_type_list_table').DataTable();
+            table.ajax.reload( null, false );
+          }
+        }
+      });
+    });
+
+    $('#form_college_inner_menues').validate({
+      rules:{
+        college_inner_menu_type:{
+          valueNotEquals:'0'
+        },
+        college_inner_menu_name:{
+          required:true
+        },
+        college_inner_menu_serial:{
+          required:true,
+          digits: true
+        }
+      },
+      messages:{
+        college_inner_menu_type:{
+          valueNotEquals:'Select menu type'
+        },
+        college_inner_menu_name:{
+          required:'Menu name is invalid'
+        },
+        college_inner_menu_serial:{
+          required:'Please enter serial number',
+          digits: 'Only digits are allowed'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/inner_menu_add',
+          data:$('#form_college_inner_menues').serialize(),
+          beforeSend:function(){
+             $('#btn_college_inner_menues').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(d){
+            if(d.success){
+              Swal.fire({
+                icon: 'success',
+                title: d.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              $('#form_college_inner_menues')[0].reset();
+              var table=$('#college_menu_type_list_table').DataTable();
+              table.ajax.reload( null, false );
+              $('#btn_college_inner_menues').html('Save').attr('disabled',false);
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: d.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              $('#btn_college_inner_menues').html('Save').attr('disabled',false);
+            }
+          }
+        });
+      }
+    });
+
+
+    $('body').on('change','#college_gallery_category',function(){
+      var v=this.value;
+      if(v=='7'){
+        $('#collegeInnerMenuesGalleryModal').find('div#college_gallery_image_div').css({'display':'none'});
+        $('#collegeInnerMenuesGalleryModal').find('div#college_gallery_video_div').css({'display':'block'});
+      }else{
+        $('#collegeInnerMenuesGalleryModal').find('div#college_gallery_image_div').css({'display':'block'});
+        $('#collegeInnerMenuesGalleryModal').find('div#college_gallery_video_div').css({'display':'none'});
+      }
+    });
+
+
+    $('#form_gallery').validate({
+      rules:{
+        college_gallery_category:{
+          valueNotEquals:'0'
+        },
+        college_gallery_image:{
+          required: function() {
+            return ($('#college_gallery_category').val() != '0' || $('#college_gallery_category').val() != 'promotional_videos');
+          },
+          extension: "jpeg|jpg|png",
+          maxFileSize: {
+              "unit": "KB",
+              "size": '200'
+          },
+          minFileSize: {
+              "unit": "KB",
+              "size": "1"
+          }
+        },
+        college_gallery_video_link:{
+          required: function() {
+            return ($('#college_gallery_category').val() != '0' || $('#college_gallery_category').val() != 'user_banner' || $('#college_gallery_category').val() != 'infrustructure_banner' || $('#college_gallery_category').val() != 'extracurricular_banner' || $('#college_gallery_category').val() != 'events_banner' || $('#college_gallery_category').val() != 'campus_facilities_banner' || $('#college_gallery_category').val() != 'laboratories_banner' || $('#college_gallery_category').val() != 'media_communication_banner' || $('#college_gallery_category').val() != 'tourism_banner' || $('#college_gallery_category').val() != 'health_science_banner' || $('#college_gallery_category').val() != 'engineering_technology_banner' || $('#college_gallery_category').val() != 'design_life_style_banner' || $('#college_gallery_category').val() != 'computing_analytics_banner' || $('#college_gallery_category').val() != 'business_management_banner');
+          }
+        }
+      },
+      messages:{
+        college_gallery_category:{
+          valueNotEquals:'Select gallery category'
+        },
+        college_gallery_image:{
+          required: 'Select gallery image',
+          extension: "Allowed file types are jpeg,jpg,png"
+        },
+        college_gallery_video_link:{
+          required: 'Enter youtube video link'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/gallery_add',
+          data:new FormData($('#form_gallery')[0]),
+          cache: false,
+          contentType: false,
+          processData: false,
+          timeout: 60000000,
+          target: '.preview',
+          beforeSend:function(){
+            $('#btn_save_form_gallery').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_form_gallery').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_gallery_list_table').DataTable();
+              table.ajax.reload( null, false );
+              $('#form_gallery').find('#college_gallery_image').val(null);
+              $('#form_gallery').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_form_gallery').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_form_gallery').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          },
+          xhr: function(){
+              //Get XmlHttpRequest object
+               var xhr = $.ajaxSettings.xhr() ;
+              //Set onprogress event handler
+               xhr.upload.onprogress = function(data){
+                  var perc =(data.loaded / data.total) * 100;// Math.round((data.loaded / data.total) * 100);
+                  $('.progress-bar').css('width',perc.toFixed(2) + '%').text(perc.toFixed(2) + '%');
+               };
+               return xhr ;
+          },
+          error: function (e) {
+          },
+          complete:function(status,xhr){
+            $('.progress-bar').css('width', '0%').text('0%');
+            $('#btn_save_college_gallry').html('Save').attr('disabled',false);
+          },
+          resetForm: true 
+        });
+      }
+    });
+
+
+    $('#form_college_faculty').validate({
+      rules:{
+        college_faculty_name:{
+          required:true
+        },
+        college_faculty_email:{
+          email:true
+        },
+        college_faculty_experience:{
+          required:false
+        }
+      },
+      messages:{
+        college_faculty_name:{
+          required:'Please enter name'
+        },
+        college_faculty_email:{
+          email:'Email is not valid'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/faculty_add',
+          data:$('#form_college_faculty').serialize(),
+          beforeSend:function(){
+            $('#btn_save_form_gallery').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_college_faculty').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_faculties_list_table').DataTable();
+              table.ajax.reload( null, false );
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_college_faculty').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_college_faculty').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+
+    $('body').on('click','.btn_del_college_gallery_file',function(){
+      let _file=$(this).attr('data-aid');
+      let _college=$(this).attr('data-cid');
+
+      Swal.fire({
+        title: "Do you want to delete the File?",
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#69da68',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value){
+          $.ajax({
+            type:'POST',
+            url:base_url+'/institutions/colleges/gallery_delete',
+            data:{_college:_college,_file:_file,csrf_test_name:csrf_hash},
+            beforeSend:function(){
+
+            },
+            success:function(d){
+              if(d.success){
+                Swal.fire({
+                  icon: 'success',
+                  title: d.success,
+                  confirmButtonText:'Close',
+                  confirmButtonColor:'#69da68',
+                  allowOutsideClick: false,
+                });
+                var table=$('#form_gallery_list_table').DataTable();
+                table.ajax.reload( null, false );
+              }else{
+                Swal.fire({
+                  icon: 'error',
+                  title: d.error,
+                  confirmButtonText:'Close',
+                  confirmButtonColor:'#69da68',
+                  allowOutsideClick: false,
+                });
+              }
+            }
+          });
+        }
+      });
+    });
+
+
+    $('body').on('click','.btn_del_college_faculty',function(){
+      var _faculty=$(this).attr('data-aid');
+
+      Swal.fire({
+        title: "Do you want to delete the Faculty data?",
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#69da68',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value){
+          $.ajax({
+            type:'POST',
+            url:base_url+'/institutions/colleges/faculty_delete',
+            data:{_college:_college,_faculty:_faculty,csrf_test_name:csrf_hash},
+            beforeSend:function(){
+
+            },
+            success:function(d){
+              if(d.success){
+                Swal.fire({
+                  icon: 'success',
+                  title: d.success,
+                  confirmButtonText:'Close',
+                  confirmButtonColor:'#69da68',
+                  allowOutsideClick: false,
+                });
+                var table=$('#college_faculties_list_table').DataTable();
+                table.ajax.reload( null, false );
+              }else{
+                Swal.fire({
+                  icon: 'error',
+                  title: d.error,
+                  confirmButtonText:'Close',
+                  confirmButtonColor:'#69da68',
+                  allowOutsideClick: false,
+                });
+              }
+            }
+          });
+        }
+      });
+    });
+
+
+    //Courses
+
+   
+
+
+    $(document).on('change','#course_duration',function(){
+
+      //alert(cost_html);
+      var i=0;
+      var dy=$('#course_duration :selected').val();
+      var html='';
+
+      
+     // $('#cost_category_div input:checkbox').attr('checked',false);
+
+      // $("#cost_category_div input[type=checkbox]:checked").each(function () {
+      //     selected.push($(this).attr('data-categorytable'));
+      // });
+
+      
+
+      //          console.log(selected);
+      
+
+      
+      
+    });
+
+    $('body').on('change','.course_cost_categories',function(){
+      var table_id=$(this).attr('data-categorytable');
+      var data_cat=$(this).attr('data-category');      
+      if($(this).is(":checked")) {        
+        gen_cost_table(table_id,data_cat,'1');
+      } else {
+        gen_cost_table(table_id,data_cat,'0');
+      }
+    });
+
+    // $('body').on('change','#course_cost_type',function(){
+    //   var table_id=$(this).attr('data-categorytable');
+    //   var data_cat=$(this).attr('data-category');      
+    //   if($(this).is(":checked")) {        
+    //     gen_cost_table(table_id,data_cat,'1');
+    //   } else {
+    //     gen_cost_table(table_id,data_cat,'0');
+    //   }
+    // });
+
+
+
+    function gen_cost_table(table_id,data_cat,data_checked){
+      var cost_type=$('#course_cost_type :selected').val();
+      var i=0;
+      var dy=$('#course_duration :selected').val();
+      var course_cost_breakup_type=$('#course_cost_breakup_type :selected').val();
+      var disabled='';
+      var html='';
+
+      //alert(data_checked);
+
+      if(course_cost_breakup_type=='2'){
+        disabled='readonly';
+      }else{
+        disabled='';
+      }
+
+      if(dy!=''){
+        if(data_checked=='1'){          
+
+          for (var i = selected_dy_last_val; i <= dy; i++){
+
+            if(cost_type=='1'){
+
+              html+='<tr>';
+              html+='<td>'+ordinal_suffix_of(i)+' Year <input type="hidden" name="registration_course_fees['+data_cat+']['+i+'][course_year]" value="'+i+'"></td>';
+              html+='<td>';
+              html+='<input type="number" class="form-control" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_tution_total]" '+disabled+'>';
+              html+='</td>';
+               html+='<td>';
+              html+='<input type="number" class="form-control" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_admission_total]" '+disabled+'>';
+              html+='</td>';
+               html+='<td>';
+              html+='<input type="number" class="form-control" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_reg_total]" '+disabled+'>';
+              html+='</td>';
+               html+='<td>';
+              html+='<input type="number" class="form-control" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_exam_total]" '+disabled+'>';
+              html+='</td>';
+               html+='<td>';
+              html+='<input type="number" class="form-control" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_other_total]" '+disabled+'>';
+              html+='</td>';
+              html+='<tr>';
+
+            }else  if(cost_type=='2'){
+                html+='<tr>';
+                  html+='<td>'+ordinal_suffix_of(i)+' Year <input type="hidden" name="registration_course_fees['+data_cat+']['+i+'][course_year]" value="'+i+'"></td>';
+                  html+='<td>';
+                    html+='<table class="table">';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_tution_fee_sem_1]"  '+disabled+'></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_tution_fee_sem_2]"  '+disabled+'></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_admisssion_fee_sem_1]"  '+disabled+'></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_admisssion_fee_sem_2]"  '+disabled+'></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_reg_fee_sem_1]"  '+disabled+'></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_reg_fee_sem_2]"  '+disabled+'></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_exam_fee_sem_1]"  '+disabled+'></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_exam_fee_sem_2]"  '+disabled+'></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_other_fee_sem_1]"  '+disabled+'></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="form-control" value="0" aria-invalid="false" name="registration_course_fees['+data_cat+']['+i+'][course_other_fee_sem_2]"  '+disabled+'></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                html+='</tr>';
+            }
+             
+          }
+
+          if(course_cost_breakup_type=='2'){
+            html+='<tr>';
+            html+='<td colspan="4"></td>';
+            html+='<td>Total</td>';
+            html+='<td>';
+              html+='<input type="number" class="form-control" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees_total['+data_cat+']">';
+              html+='</td>';
+            html+='</tr>';
+          }
+          
+          $('#'+table_id+' tbody').html(html)
+        }else if(data_checked=='0'){
+          $('#'+table_id+' tbody').html(html);
+        } 
+      } 
+    }
+
+    function gen_fees_table(){
+      var cost_type=$('#course_cost_type :selected').val();
+      var i=0;
+      var dy=$('#course_duration :selected').val();
+      var html=''; 
+
+      if(dy!=''){
+        for (var i = selected_dy_last_val; i <= dy; i++) {
+
+          if(cost_type=='1'){
+            html+='<tr>';
+            html+='<td>'+ordinal_suffix_of(i)+' Year <input type="hidden" name="registration_course_fees['+i+'][course_year]" value="'+i+'"></td>';
+            html+='<td>';
+            html+='<input type="number" class="form-control" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_tution_total]">';
+            html+='</td>';
+            html+='<tr>';
+
+            if(cost_html!=''){
+              $('#course_price_list_table_1 tbody').html(cost_html+html);
+            }else if(cost_html==''){
+              $('#course_price_list_table_1 tbody').html(html);
+            }
+         }else if(cost_type=='2'){
+            html+='<tr>';
+                  html+='<td>'+ordinal_suffix_of(i)+' Year <input type="hidden" name="registration_course_fees['+i+'][course_year]" value="'+i+'"></td>';
+                  html+='<td>';
+                    html+='<table class="table">';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_tution_fee_sem_1]"></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_tution_fee_sem_2]"></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_admisssion_fee_sem_1]"></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_admisssion_fee_sem_2]"></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_reg_fee_sem_1]"></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_reg_fee_sem_2]"></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_exam_fee_sem_1]"></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_exam_fee_sem_2]"></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                  html+='<td>';
+                    html+='<table>';
+                      html+='<tr><td><label>Semester 1</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_other_fee_sem_1]"></td></tr>';
+                      html+='<tr><td><label>Semester 2</label></br>';
+                      html+='<input type="number" min="0" class="" value="0" aria-invalid="false" name="registration_course_fees['+i+'][course_other_fee_sem_2]"></td></tr>';
+                    html+='</table>';
+                  html+='</td>';
+                html+='</tr>';
+
+                if(cost_html!=''){
+                  $('#course_price_list_table tbody').html(cost_html+html);
+                }else if(cost_html==''){
+                  $('#course_price_list_table tbody').html(html);
+                }
+          }        
+        }
+      }
+    }
+
+    $('#college_courses_fees_list_table').DataTable({ 
+        'bJQueryUI': false,
+        'stateSave': true,
+        'iDisplayLength':50,
+        'responsive': true,
+        "pagingType": "full_numbers",
+        'language': {
+          'paginate': {
+            'first': "<<", // This is the link to the first page
+            'previous': "<", // This is the link to the previous page
+            'next': ">", // This is the link to the next page
+            'last': ">>" // This is the link to the last page
+          }
+        },
+        "lengthMenu": [[10,25,50,100,250,500,1000,1500], [10,25,50,100,250,500,1000,1500]],
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": base_url+'/institutions/colleges/courses_search',
+            "type": "POST",
+            "data":{csrf_test_name:csrf_hash,_college:_college}
+        },
+        //Set column definition initialisation properties.
+        "columnDefs": [
+        { 
+            "targets": [ 0 ], //first column / numbering column
+            "orderable": false, //set not orderable
+        },
+        ],
+    });
+
+
+    $('#form_college_courses_fees').validate({
+      rules:{
+        _course:{
+          valueNotEquals:'0'
+        },
+        course_duration:{
+          valueNotEquals:'0'
+        },
+        course_duration_type:{
+          valueNotEquals:'0'
+        },
+        course_type:{
+          valueNotEquals:'0'
+        },
+        course_pass_type:{
+          valueNotEquals:'0'
+        }
+      },
+      messages:{
+        _course:{
+          valueNotEquals:'Select course'
+        },
+        course_duration:{
+          valueNotEquals:'Select duration'
+        },
+        course_duration_type:{
+          valueNotEquals:'Select duration type'
+        },
+        course_type:{
+          valueNotEquals:'Select course type'
+        },
+        course_pass_type:{
+          valueNotEquals:'Select pass type'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/courses_add',
+          data:$('#form_college_courses_fees').serialize(),
+          beforeSend:function(){
+           $('#btn_save_course').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_course').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_courses_fees_list_table').DataTable();
+              table.ajax.reload( null, false );
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_course').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_course').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    $('#form_college_courses_fees_intro').validate({
+      rules:{
+        college_general_info:{
+          required:true
+        }
+      },
+      messages:{
+        college_general_info:{
+          required:'Enter information'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/info_add',
+          data:$('#form_college_courses_fees_intro').serialize(),
+          beforeSend:function(){
+            $('#btn_save_course_info').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_course_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_course_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_course_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    $('#form_college_admission_intro').validate({
+      rules:{
+        college_general_info:{
+          required:true
+        }
+      },
+      messages:{
+        college_general_info:{
+          required:'Enter information'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/info_add',
+          data:$('#form_college_admission_intro').serialize(),
+          beforeSend:function(){
+            $('#btn_save_admission_info').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_admission_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_admission_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_admission_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    $('#form_college_cutoff_intro').validate({
+      rules:{
+        college_general_info:{
+          required:true
+        }
+      },
+      messages:{
+        college_general_info:{
+          required:'Enter information'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/info_add',
+          data:$('#form_college_cutoff_intro').serialize(),
+          beforeSend:function(){
+            $('#btn_save_cutoff_info').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_cutoff_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_cutoff_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_cutoff_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+
+    $('#form_college_placement_intro').validate({
+      rules:{
+        college_general_info:{
+          required:true
+        }
+      },
+      messages:{
+        college_general_info:{
+          required:'Enter information'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/info_add',
+          data:$('#form_college_placement_intro').serialize(),
+          beforeSend:function(){
+            $('#btn_save_placement_info').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_placement_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_placement_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_placement_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    $('#form_college_scholar_intro').validate({
+      rules:{
+        college_general_info:{
+          required:true
+        }
+      },
+      messages:{
+        college_general_info:{
+          required:'Enter information'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/info_add',
+          data:$('#form_college_scholar_intro').serialize(),
+          beforeSend:function(){
+            $('#btn_save_scholar_info').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_scholar_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_scholar_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_scholar_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    $('#form_college_faculty_intro').validate({
+      rules:{
+        college_general_info:{
+          required:true
+        }
+      },
+      messages:{
+        college_general_info:{
+          required:'Enter information'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/info_add',
+          data:$('#form_college_faculty_intro').serialize(),
+          beforeSend:function(){
+            $('#btn_save_faculty_info').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_faculty_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_faculty_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_faculty_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    $('body').on('click','.btn_del_ucourse',function(){
+      var _course=$(this).attr('data-ucid');
+
+      Swal.fire({
+        title: "Do you want to delete the Course data?",
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#69da68',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value){
+          $.ajax({
+            type:'POST',
+            url:base_url+'/institutions/colleges/courses_delete',
+            data:{_college:_college,_course:_course,csrf_test_name:csrf_hash},
+            beforeSend:function(){
+
+            },
+            success:function(d){
+              if(d.success){
+                Swal.fire({
+                  icon: 'success',
+                  title: d.success,
+                  confirmButtonText:'Close',
+                  confirmButtonColor:'#69da68',
+                  allowOutsideClick: false,
+                });
+                var table=$('#college_courses_fees_list_table').DataTable();
+                table.ajax.reload( null, false );
+              }else{
+                Swal.fire({
+                  icon: 'error',
+                  title: d.error,
+                  confirmButtonText:'Close',
+                  confirmButtonColor:'#69da68',
+                  allowOutsideClick: false,
+                });
+              }
+            }
+          });
+        }
+      });
+    });
+
+    //Courses
+
+
+    //Hostel
+
+    $('body').on('click','#hostel_details_type_general_women',function(){
+      var v=$(this).val();
+
+      if(v=='1'){
+        $('#form_hostel_settings_women_general_div').css('display','block');
+        $('#form_hostel_settings_women_specific_div').css('display','none');
+      }else if(v=='2'){
+        $('#form_hostel_settings_women_general_div').css('display','none');
+        $('#form_hostel_settings_women_specific_div').css('display','block');
+      }
+    });
+
+    $('body').on('click','#hostel_details_type_specific_women',function(){
+      var v=$(this).val();
+
+      if(v=='1'){
+        $('#form_hostel_settings_women_general_div').css('display','block');
+        $('#form_hostel_settings_women_specific_div').css('display','none');
+      }else if(v=='2'){
+        $('#form_hostel_settings_women_general_div').css('display','none');
+        $('#form_hostel_settings_women_specific_div').css('display','block');
+      }
+    });
+
+    $('body').on('click','#hostel_details_type_specific_men',function(){
+      var v=$(this).val();
+
+      if(v=='1'){
+        $('#form_hostel_settings_men_general_div').css('display','block');
+        $('#form_hostel_settings_men_specific_div').css('display','none');
+      }else if(v=='2'){
+        $('#form_hostel_settings_men_general_div').css('display','none');
+        $('#form_hostel_settings_men_specific_div').css('display','block');
+      }
+    });
+
+    $('body').on('click','#hostel_details_type_general_men',function(){
+      var v=$(this).val();
+
+      if(v=='1'){
+        $('#form_hostel_settings_men_general_div').css('display','block');
+        $('#form_hostel_settings_men_specific_div').css('display','none');
+      }else if(v=='2'){
+        $('#form_hostel_settings_men_general_div').css('display','none');
+        $('#form_hostel_settings_men_specific_div').css('display','block');
+      }
+    });
+
+    $('#form_college_hostel_men').validate({
+
+      submitHandler:function(f){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/hostel_add',
+          data:$('#form_college_hostel_men').serialize(),
+          beforeSend:function(){
+            $('#btn_save_form_hostel_men').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_form_hostel_men').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });          
+            }else if(f.error){
+              $('#btn_save_form_hostel_men').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_form_hostel_men').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    $('#form_college_hostel_women').validate({
+
+      submitHandler:function(f){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/hostel_add',
+          data:$('#form_college_hostel_women').serialize(),
+          beforeSend:function(){
+            $('#btn_save_form_hostel_women').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_form_hostel_women').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });          
+            }else if(f.error){
+              $('#btn_save_form_hostel_women').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_form_hostel_women').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+
+    var row=0;
+
+    $('body').on('click','#btn_add_hostel_men_row',function(){
+      var html='';
+
+      html+='<tr id="tr' + row + '">';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row+'][name]" aria-describedby="hostel_name" placeholder="Name of the Residence" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row+'][rooms]" aria-describedby="hostel_rooms" placeholder="Rooms" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row+'][rooms_non_ac_charges]" aria-describedby="hostel_rooms_non_ac_charges" placeholder="Non AC Rooms Charges(Per Annum)" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row+'][rooms_ac_charges]" aria-describedby="hostel_rooms_ac_charges" placeholder="AC Rooms Charges(Per Annum)" value="">';
+      html+='</td>';
+      html+='</td>';
+      html+='<td>';
+      html+='<button type="button" class="btn btn-sm btn-danger" onclick="$(\'#tr' + row + '\').remove()"><i class="fa fa-minus"></i></button>';
+      html+='</td>';
+      html+='</tr>';
+
+      $('#form_college_hostel_men tbody').append(html);
+
+      row++;
+    });
+
+    var row2=0;
+
+    $('body').on('click','#btn_add_hostel_row_women',function(){
+      var html='';
+
+      html+='<tr id="trw' + row2 + '">';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row2+'][name]" aria-describedby="hostel_name" placeholder="Name of the Residence" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row2+'][rooms]" aria-describedby="hostel_rooms" placeholder="Rooms" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row2+'][rooms_non_ac_charges]" aria-describedby="hostel_rooms_non_ac_charges" placeholder="Non AC Rooms Charges(Per Annum)" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="hostel['+row2+'][rooms_ac_charges]" aria-describedby="hostel_rooms_ac_charges" placeholder="AC Rooms Charges(Per Annum)" value="">';
+      html+='</td>';
+      html+='</td>';
+      html+='<td>';
+      html+='<button type="button" class="btn btn-sm btn-danger" onclick="$(\'#trw' + row2 + '\').remove()"><i class="fa fa-minus"></i></button>';
+      html+='</td>';
+      html+='</tr>';
+
+      $('#form_college_hostel_women tbody').append(html);
+
+      row2++;
+    });
+
+    //Hostel
+
+
+    //Info
+    $('#form_college_info').validate({
+      rules:{
+        college_general_info:{
+          required:true
+        }
+      },
+      messages:{
+        college_general_info:{
+          required:'Enter information'
+        }
+      },
+      submitHandler:function(){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/info_add',
+          data:$('#form_college_info').serialize(),
+          beforeSend:function(){
+            $('#btn_save_college_general_info').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+              $('#btn_save_college_general_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_faculties_list_table').DataTable();
+              table.ajax.reload( null, false );
+              if(f.redirect){
+                window.location.href=f.redirect;
+              }
+              //$('#form_college_faculty').find('#college_gallery_image').val(null);
+              //$('#form_college_faculty').find('#college_gallery_category').val('0').trigger('change');           
+            }else if(f.error){
+              $('#btn_save_college_general_info').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_college_faculty').html('Save').prop('disabled',false);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    //Info
+
+
+  }
+
+  
+
+ $("#course_streams").chosen({no_results_text: "Select Streams"});
+ $("#course_news").chosen({no_results_text: "Select News by Title"});
+ $("#course_exams").chosen({no_results_text: "Select Exams"});
+
+ $("#college_country").chosen({no_results_text: "Select Country"});
+ $("#college_state").chosen({no_results_text: "Select State"});
+ $("#college_district").chosen({no_results_text: "Select District"});
+ $("#college_city").chosen({no_results_text: "Select City"});
+ $("#college_university").chosen({no_results_text: "Select University"});
+ $("#college_course").chosen({no_results_text: "Select Course"});
+ $("#college_courses").chosen({no_results_text: "Select Course"});
+ $("#college_faculty_qualifications").chosen({no_results_text: "Select Qualification"});
+ $("#college_faculty_subjects").chosen({no_results_text: "Select Subjects"});
+
+  $('body').on('paste keyup focusout','#college_name,#college_email,#college_phone',function(){
+    $.ajax({
+      url:base_url+'/institutions/colleges/check_college',
+      type:'POST',
+      data:{
+        college_name:$('#form_college').find('#college_name').val(),
+        college_country:$('#form_college').find('#college_country').val(),
+        college_state:$('#form_college').find('#college_state').val(),
+        college_city:$('#form_college').find('#college_city').val(),
+        college_university:$('#form_college').find('#college_university').val(),
+        csrf_test_name:csrf_hash
+      },
+      success:function(d){
+        if(d.error){
+          Swal.fire({
+            icon: 'error',
+            title: d.error,
+            confirmButtonText:'Close',
+            confirmButtonColor:'#69da68',
+            allowOutsideClick: false,
+          });
+          $('#btn_save_college').css('display','none');
+        }else{
+          $('#btn_save_college').css('display','block');
+        }
+      }
+    });
+  });
+
+  $("#course_news").chosen().change(function(){
+    var selected=$(this).val();
+    if(selected!=''){
+      $('#btn_add_news_to_college').prop('disabled',false);
+    }else{
+      $('#btn_add_news_to_college').prop('disabled',true);
+    }
+  });
+
+
+  $('body').on('click','.btn_news_add',function(){
+    var cid=$(this).attr('data-college');
+    var country=$(this).attr('data-country');
+    var news_type=$(this).attr('data-news_type');
+    var html='';
+
+    $.ajax({
+      type:'POST',
+      url:base_url+'/news/load_news',
+      data:{csrf_test_name:csrf_hash,cid:cid,country:country,news_type:news_type},
+      success:function(d){
+        if(d!=''){
+          $.each(d,function(i,v){
+            html+='<option value="'+v.news_id+'" '+v.selected+'>'+v.news_title+'</option>';
+          });          
+        }
+
+        $('#course_news').html(html);
+        $("#course_news").trigger("chosen:updated");
+
+        $('#collegeNewswModal').find('#cid').val(cid);
+
+        
+      }
+    });
+  });
+
+
+  $('#form_college_news').validate({
+    submitHandler:function(){
+      $.ajax({
+        type:'POST',
+        url:base_url+'/news/tag_news',
+        data:$('#form_college_news').serialize(),
+        beforeSend:function(){
+          $('#btn_add_news_to_college').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Saving...</span>').prop('disabled',true);
+        },
+        success:function(d){
+          if(d.success){
+            $('#btn_add_news_to_college').prop('disabled',true).html('Update');
+             Swal.fire({
+                icon: 'success',
+                title: d.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+             $('#course_news').html('');
+              $("#course_news").trigger("chosen:updated");
+             $('#collegeNewswModal').modal('hide');
+          }else{
+            $('#btn_add_news_to_college').prop('disabled',true).html('Update');
+             Swal.fire({
+                icon: 'error',
+                title: d.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+          }
+        },
+        complete:function(xhr,status){
+          var table=$('#college_list_table').DataTable();
+          table.ajax.reload( null, false ); 
+        }
+      });
+    }
+  });
+    
+
+
+  $('#form_college').validate({
+    rules:{
+      college_state:{
+        valueNotEquals: "0" 
+      },
+      college_city:{
+        valueNotEquals: "0" 
+      },
+      college_name:{
+        required:true
+      },
+      college_email:{
+        required:false,
+        email:true
+      },
+      college_phone:{
+        required:false
+      },
+      college_estd:{
+        required:true,
+        digits: true,
+        minlength:4,
+        maxlength:4
+      },
+      college_type:{
+        valueNotEquals: "0"
+      },
+      college_university:{
+        valueNotEquals: "0" 
+      },
+      college_youtube_video_link:{
+        required:false,
+        ytVidId:true
+      },
+      college_logo:{
+        required:false,
+        extension: "jpeg|jpg|png",
+        maxFileSize: {
+            "unit": "KB",
+            "size": "200"
+        },
+        minFileSize: {
+            "unit": "KB",
+            "size": "0.50"
+        }
+      },
+      college_banner:{
+        required:false,
+        extension: "jpeg|jpg|png",
+        maxFileSize: {
+            "unit": "KB",
+            "size": "1100"
+        },
+        minFileSize: {
+            "unit": "KB",
+            "size": "0.50"
+        }
+      }
+    },
+    messages:{
+      college_state:{
+        valueNotEquals: "Please select state" 
+      },
+      college_city:{
+        valueNotEquals: "Please select city" 
+      },
+      college_name:{
+        required:"Please enter college name"
+      },
+      college_email:{
+        email:"Email address is not valid"
+      },
+      college_phone:{
+        required:"Please enter college Phone No."
+      },
+      college_estd:{
+        required:"Please enter Estd. year",
+        digits: "Only numeric value allowed",
+        minlength:"Estd. Year must be 4 digit long",
+        maxlength:"Estd. Year must be 4 digit long",
+      },
+      college_type:{
+        valueNotEquals: "Please enter college type"
+      },
+      college_university:{
+        valueNotEquals: "Please select University" 
+      },
+      college_logo:{
+        extension: "Allowed file types are jpeg,jpg,png"
+      },
+      college_banner:{
+        extension: "Allowed file types are jpeg,jpg,png"
+      }
+    },
+    submitHandler:function(){
+      $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/save_college',
+          data:new FormData($('#form_college')[0]),
+          cache: false,
+          contentType: false,
+          processData: false,
+          timeout: 60000000,
+          target: '.preview',
+          beforeSend:function(){
+            $('#btn_save_college').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Saving...</span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+             $('#btn_save_college').prop('disabled',true);
+             Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });  
+              window.location.reload();          
+            }else if(f.error){
+              $('#btn_save_college').prop('disabled',true);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_save_college').prop('disabled',true);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          },
+          xhr: function(){
+              //Get XmlHttpRequest object
+               var xhr = $.ajaxSettings.xhr() ;
+              //Set onprogress event handler
+               xhr.upload.onprogress = function(data){
+                  var perc =(data.loaded / data.total) * 100;// Math.round((data.loaded / data.total) * 100);
+                  $('.progress-bar').css('width',perc.toFixed(2) + '%').text(perc.toFixed(2) + '%');
+               };
+               return xhr ;
+          },
+          error: function (e) {
+          },
+          complete:function(status,xhr){
+            $('.progress-bar').css('width', '0%').text('0%');
+            $('#btn_save_college').html('Save').attr('disabled',false);
+          },
+          resetForm: true 
+      });
+    }
+  });
+
+
+  $('#form_college_quick_upload').validate({
+    rules:{
+      college_name:{
+        required:true
+      },
+      college_email:{
+        required:false,
+        email:true
+      },
+      college_phone:{
+        required:false
+      },
+      college_estd:{
+        required:true,
+        digits: true,
+        minlength:4,
+        maxlength:4
+      },
+      college_logo:{
+        required:false,
+        extension: "jpeg|jpg|png",
+        maxFileSize: {
+            "unit": "KB",
+            "size": "200"
+        },
+        minFileSize: {
+            "unit": "KB",
+            "size": "0.50"
+        }
+      },
+      college_banner:{
+        required:false,
+        extension: "jpeg|jpg|png",
+        maxFileSize: {
+            "unit": "KB",
+            "size": "900"
+        },
+        minFileSize: {
+            "unit": "KB",
+            "size": "0.50"
+        }
+      }
+    },
+    messages:{
+      college_name:{
+        required:"Please enter college name"
+      },
+      college_email:{
+        email:"Email address is not valid"
+      },
+      college_phone:{
+        required:"Please enter college Phone No."
+      },
+      college_estd:{
+        required:"Please enter Estd. year",
+        digits: "Only numeric value allowed",
+        minlength:"Estd. Year must be 4 digit long",
+        maxlength:"Estd. Year must be 4 digit long",
+      },
+      college_logo:{
+        extension: "Allowed file types are jpeg,jpg,png"
+      },
+      college_banner:{
+        extension: "Allowed file types are jpeg,jpg,png"
+      }
+    },
+    submitHandler:function(){
+      $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/save_college_quick',
+          data:new FormData($('#form_college_quick_upload')[0]),
+          cache: false,
+          contentType: false,
+          processData: false,
+          timeout: 60000000,
+          target: '.preview',
+          beforeSend:function(){
+            $('#btn_update_college_quick').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+             $('#btn_update_college_quick').prop('disabled',true);
+             Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });  
+             var table=$('#college_list_table').DataTable();
+              table.ajax.reload( null, false );          
+            }else if(f.error){
+              $('#btn_update_college_quick').prop('disabled',true);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_update_college_quick').prop('disabled',true);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          },
+          xhr: function(){
+              //Get XmlHttpRequest object
+               var xhr = $.ajaxSettings.xhr() ;
+              //Set onprogress event handler
+               xhr.upload.onprogress = function(data){
+                  var perc =(data.loaded / data.total) * 100;// Math.round((data.loaded / data.total) * 100);
+                  $('.progress-bar').css('width',perc.toFixed(2) + '%').text(perc.toFixed(2) + '%');
+               };
+               return xhr ;
+          },
+          error: function (e) {
+          },
+          complete:function(status,xhr){
+            $('.progress-bar').css('width', '0%').text('0%');
+            $('#form_college_quick_upload')[0].reset();
+            $('#btn_update_college_quick').html('Update').attr('disabled',false);
+            $('#collegeQuickUpdateModal').modal('hide');
+          },
+          resetForm: true 
+      });
+    }
+  });
+
+  $('#form_college_excel').validate({
+    rules: {
+      college_excel: {
+        required: true        
+      }
+    },
+    messages: {
+      college_excel: {
+        required: 'Select excel file'
+      }
+    },
+    submitHandler:function(){
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/colleges/import_college',
+        data:new FormData($('#form_college_excel')[0]),
+        cache: false,
+        contentType: false,
+        processData: false,
+        timeout: 60000000,
+        target: '.preview',
+        beforeSend:function(){
+            $('#btn_import_college').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Saving...</span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.success){
+             $('#btn_import_college').prop('disabled',true);
+             Swal.fire({
+                icon: 'success',
+                title: f.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_list_table').DataTable();
+              table.ajax.reload( null, false );
+              $('#form_college_excel').trigger("reset");
+              $('#collegeImportModal').modal('hide');         
+            }else if(f.error){
+              $('#btn_import_college').prop('disabled',true);
+              Swal.fire({
+                icon: 'error',
+                title: f.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }else if(f.redirect){
+              $('#btn_import_college').prop('disabled',true);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          },
+          xhr: function(){
+              //Get XmlHttpRequest object
+               var xhr = $.ajaxSettings.xhr() ;
+              //Set onprogress event handler
+               xhr.upload.onprogress = function(data){
+                  var perc =(data.loaded / data.total) * 100;// Math.round((data.loaded / data.total) * 100);
+                  $('.progress-bar').css('width',perc.toFixed(2) + '%').text(perc.toFixed(2) + '%');
+               };
+               return xhr ;
+          },
+          error: function (e) {
+          },
+          complete:function(status,xhr){
+            $('.progress-bar').css('width', '0%').text('0%');
+            $('#btn_import_college').html('Save').attr('disabled',false);
+          },
+          resetForm: true 
+      });
+    }
+  });
+
+
+  $('body').on('click','.btn_review_writing',function(){
+    $('#form_inst_review_upload').find('#_inst_id').val($(this).attr('data-college'));
+    $('#collegeReviewModal').find('#collegeReviewModalTitle').html('Add Review for '+$(this).attr('data-college_name'));
+  });
+
+
+  $('body').on('click','#btn_export_search_data',function(){
+    $.ajax({
+      type:'POST',
+      url:base_url+'/institutions/colleges/export_to_search',
+      data:{csrf_test_name:csrf_hash},
+      beforeSend:function(){
+        $('#btn_export_search_data').prop('disabled',true).html('Exporting...');
+      },
+      success:function(d){
+        if(d.success){
+          alert(d.success);
+        }else{
+          alert(d.error);
+        }
+
+       
+      },
+      complete:function(xhr,status){
+         $('#btn_export_search_data').prop('disabled',false).html('Export');
+      }
+    });
+  });
+
+
+
+  $('#form_inst_review_upload').validate({
+    rules:{
+      review_detail_placement:{
+        required:true,
+        minlength:45
+      },
+      review_detail_interview:{
+        required:true,
+        minlength:45
+      },
+      review_detail_internship:{
+        required:true,
+        minlength:45
+      },
+      review_detail_college:{
+        required:true,
+        minlength:45
+      },
+      review_detail_campus:{
+        required:true,
+        minlength:45
+      },
+      review_detail_social:{
+        required:true,
+        minlength:45
+      },
+      review_detail_hostel:{
+        required:true,
+        minlength:45
+      },
+      review_detail_courses:{
+        required:true,
+        minlength:45
+      },
+      review_detail_faculty:{
+        required:true,
+        minlength:45
+      }
+    },
+    messages:{
+      review_detail_placement:{
+        required:'Please enter detailed review',
+      }
+    },
+    submitHandler:function(){
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/save_review',
+        data:$('#form_inst_review_upload').serialize(),
+        beforeSend:function(){
+          $('#btn_update_review').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+        },
+        success:function(d){
+          if(d.success){
+            Swal.fire({
+              icon: 'success',
+              title: d.success,
+              confirmButtonText:'Close',
+              confirmButtonColor:'#69da68',
+              allowOutsideClick: false,
+            });
+            $('#form_inst_review_upload')[0].reset();
+          }else if(d.error){
+            Swal.fire({
+              icon: 'error',
+              title: d.error,
+              confirmButtonText:'Close',
+              confirmButtonColor:'#69da68',
+              allowOutsideClick: false,
+            });
+          }
+        },
+        complete:function(status,xhr){
+          $('#btn_update_review').html('Submit').attr('disabled',false);
+          $('#collegeReviewModal').modal('hide');
+        }
+      });
+    }
+  });
+
+
+  $('#form_college_excel_2').validate({
+    rules: {
+      college_excel: {
+        required: true,
+        extension: "xlsx",
+        maxFileSize: {
+            "unit": "KB",
+            "size": "10000"
+        },
+        minFileSize: {
+            "unit": "KB",
+            "size": "5"
+        }       
+      },
+      country_states:{
+        valueNotEquals:"0"
+      },
+      country_universities:{
+        valueNotEquals:"0"
+      }
+    },
+    messages: {
+      college_excel: {
+        required: 'Select excel file'
+      },
+      country_states:{
+        valueNotEquals:"Select state"
+      },
+      country_universities:{
+        valueNotEquals:"Select university"
+      }
+    },
+    submitHandler:function(){
+      $.ajax({
+        type:'POST',
+        url:base_url+'/institutions/colleges/import_college_data_preview',
+        data:new FormData($('#form_college_excel_2')[0]),
+        cache: false,
+        contentType: false,
+        processData: false,
+        timeout: 60000000,
+        target: '.preview',
+        beforeSend:function(){
+            $('#btn_import_college_data_preview').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+          },
+          success:function(f){
+            if(f.html==''){
+              $('#btn_import_college_data_preview').prop('disabled',false);
+              $('#btn_import_college_data_preview').css('display','none');
+              $('#btn_import_college').css('display','block');
+              $.ajax({
+                type:'POST',
+                url:base_url+'/institutions/colleges/import_college_2',
+                data:new FormData($('#form_college_excel_2')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                timeout: 60000000,
+                target: '.preview',
+                beforeSend:function(){
+                  $('#btn_import_college').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop('disabled',true);
+                },
+                success:function(d){
+                  if(d.success){
+                   $('#btn_import_college').prop('disabled',true);
+                   Swal.fire({
+                      icon: 'success',
+                      title: d.success,
+                      confirmButtonText:'Close',
+                      confirmButtonColor:'#69da68',
+                      allowOutsideClick: false,
+                    });
+                    var table=$('#college_list_table').DataTable();
+                    table.ajax.reload( null, false );
+                    $('#form_college_excel_2').trigger("reset");
+                    $('#collegeImportModal').modal('hide');         
+                  }else if(d.error){
+                    $('#btn_import_college').prop('disabled',true);
+                    Swal.fire({
+                      icon: 'error',
+                      title: d.error,
+                      confirmButtonText:'Close',
+                      confirmButtonColor:'#69da68',
+                      allowOutsideClick: false,
+                    });
+                  }else if(d.redirect){
+                    $('#btn_import_college').prop('disabled',true);
+                    Swal.fire({
+                      icon: 'info',
+                      title: 'Your session expired',
+                      confirmButtonText:'Close',
+                      confirmButtonColor:'#69da68',
+                      allowOutsideClick: false,
+                    });
+                  }
+                },
+                xhr: function(){
+                    //Get XmlHttpRequest object
+                     var xhr = $.ajaxSettings.xhr() ;
+                    //Set onprogress event handler
+                     xhr.upload.onprogress = function(data){
+                        var perc =(data.loaded / data.total) * 100;// Math.round((data.loaded / data.total) * 100);
+                        $('.progress-bar').css('width',perc.toFixed(2) + '%').text(perc.toFixed(2) + '%');
+                     };
+                     return xhr ;
+                },
+                error: function (e) {
+                },
+                complete:function(status,xhr){
+                  $('.progress-bar').css('width', '0%').text('0%');
+                  $('#btn_import_college').html('Upload').attr('disabled',false);
+                },
+                resetForm: true 
+              });
+                     
+            }else if(f.html!=''){
+              $('#btn_import_college_data_preview').prop('disabled',false);
+              $('#btn_import_college_data_preview').css('display','block');
+              $('#btn_import_college').css('display','none');
+
+              $('#collegeImportPreviewModal').find('.modal-body').html(f.html);
+              $('#collegeImportPreviewModal').modal('show');
+
+            }else if(f.redirect){
+              $('#btn_import_college_data_preview').prop('disabled',true);
+              $('#btn_import_college').prop('disabled',true);
+              Swal.fire({
+                icon: 'info',
+                title: 'Your session expired',
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          },
+          xhr: function(){
+              //Get XmlHttpRequest object
+               var xhr = $.ajaxSettings.xhr() ;
+              //Set onprogress event handler
+               xhr.upload.onprogress = function(data){
+                  var perc =(data.loaded / data.total) * 100;// Math.round((data.loaded / data.total) * 100);
+                  $('.progress-bar').css('width',perc.toFixed(2) + '%').text(perc.toFixed(2) + '%');
+               };
+               return xhr ;
+          },
+          error: function (e) {
+          },
+          complete:function(status,xhr){
+            $('.progress-bar').css('width', '0%').text('0%');
+            $('#btn_import_college_data_preview').html('Upload').attr('disabled',false);
+          },
+          resetForm: true 
+      });
+    }
+  });
+
+  $('body').on('change','#college_country',function(){
+    let country=$('#college_country :selected').val();
+
+    let f_data  =   new Array(country);
+    let ctext   =   CryptoJS.AES.encrypt(JSON.stringify(f_data), _xtYu, { format: CryptoJSAesJson }).toString();
+    $.ajax({
+      type:'POST',
+      url:base_url+'/country/get_states',
+      data:{ctext:ctext,listing_type:'1',csrf_test_name:csrf_hash},
+      success:function(d){
+        $('#college_state').html(d.html);
+        $("#college_state").trigger("chosen:updated");
+      }
+    });
+    load_university(country,'0','0');
+    load_statuetorybodies(country);
+  });
+
+  $('body').on('change','#country_states',function(){
+    var state_id=$('#country_states :selected').val();
+    load_university(country,state_id,'0');
+  });
+
+  $('body').on('change','#college_state',function(){
+    let country = $('#college_country :selected').val();
+    let state   = $('#college_state :selected').val();
+    let city    = $('#college_city :selected').val();
+    let f_data  =   new Array(country,state);
+    let ctext   =   CryptoJS.AES.encrypt(JSON.stringify(f_data), _xtYu, { format: CryptoJSAesJson }).toString();
+    $.ajax({
+      type:'POST',
+      url:base_url+'/country/get_cities',
+      data:{ctext:ctext,csrf_test_name:csrf_hash},
+      success:function(d){
+        $('#college_city').html(d.html);
+        $("#college_city").trigger("chosen:updated");
+      }
+    });
+   // load_university(country,state,city);
+    load_districts(country,state);
+  });
+
+  $('body').on('change','#college_city',function(){
+    let country = $('#college_country :selected').val();
+    let state   = $('#college_state :selected').val();
+    let city    = $('#college_city :selected').val();
+    // load_university(country,state,city);
+  });
+
+
+  $('body').on('click','.btn_del_college',function(){
+    let _college=$(this).attr('data-aid');
+
+    Swal.fire({
+      title: "Do you want to delete the College?",
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#69da68',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value){
+        $.ajax({
+          type:'POST',
+          url:base_url+'/institutions/colleges/delete_college',
+          data:{_college:_college,csrf_test_name:csrf_hash},
+          beforeSend:function(){
+
+          },
+          success:function(d){
+            if(d.success){
+              Swal.fire({
+                icon: 'success',
+                title: d.success,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+              var table=$('#college_list_table').DataTable();
+              table.ajax.reload( null, false );
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: d.error,
+                confirmButtonText:'Close',
+                confirmButtonColor:'#69da68',
+                allowOutsideClick: false,
+              });
+            }
+          }
+        });
+      }
+    });
+  });
+
+  if(_ur=='5'){
+    $('#notesModal').modal('show');
+  }
+
+  $('.file-upload-browse').on('click', function(e) {
+      var file = $(this).parent().parent().parent().find('.file-upload-default');
+      file.trigger('click');
+  });
+  $('.file-upload-default').on('change', function() {
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+  });
+
+
+  $('body').on('click','.btn_create_slug',function(){
+    var data_value_id=$(this).attr('data-value_id');
+    var data_type=$(this).attr('data-type')
+    $.ajax({
+      type:'POST',
+      url:base_url+'/institutions/save_slug',
+      data:{csrf_test_name:csrf_hash,data_value_id:data_value_id,data_type:data_type},
+      beforeSend:function(){
+          $(this).prop('disabled',true);
+          $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Saving...</span>').prop('disabled',true);
+      },
+      success:function(d){
+        if(d.success){
+          var table=$('#college_list_table').DataTable();
+          table.ajax.reload( null, false );          
+        }
+      }
+    });
+  });
+
+  function ordinal_suffix_of(i) {
+      var j = i % 10,
+          k = i % 100;
+      if (j == 1 && k != 11) {
+          return i + "st";
+      }
+      if (j == 2 && k != 12) {
+          return i + "nd";
+      }
+      if (j == 3 && k != 13) {
+          return i + "rd";
+      }
+      return i + "th";
+  }
+
+  function load_university(country,state,city){
+    let f_data  =   new Array(country,state,city);
+    let ctext   =   CryptoJS.AES.encrypt(JSON.stringify(f_data), _xtYu, { format: CryptoJSAesJson }).toString();
+    $.ajax({
+      type:'POST',
+      url:base_url+'/country/get_universities',
+      data:{ctext:ctext,csrf_test_name:csrf_hash},
+      success:function(d){
+        $('#college_university').html(d.html);
+      }
+    });
+  }
+
+  function load_districts(country,state){
+    let f_data  =   new Array(country,state);
+    let ctext   =   CryptoJS.AES.encrypt(JSON.stringify(f_data), _xtYu, { format: CryptoJSAesJson }).toString();
+    $.ajax({
+      type:'POST',
+      url:base_url+'/country/get_districts',
+      data:{ctext:ctext,csrf_test_name:csrf_hash},
+      success:function(d){
+        $('#college_district').html(d.html);
+      }
+    });
+  }
+
+  function load_statuetorybodies(country){
+    let f_data  =   new Array(country);
+    let ctext   =   CryptoJS.AES.encrypt(JSON.stringify(f_data), _xtYu, { format: CryptoJSAesJson }).toString();
+    $.ajax({
+      type:'POST',
+      url:base_url+'/country/get_statuetorybodies',
+      data:{ctext:ctext,csrf_test_name:csrf_hash},
+      success:function(d){
+        $('#college_affiliations_div').html(d.html);
+      }
+    });
+  }
+
+
+  function FileZise(bytes, si) {
+    var thresh = si ? 1000 : 1024;
+    if(Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+    }
+    var units = si
+        ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+        : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+    var u = -1;
+    do {
+        bytes /= thresh;
+        ++u;
+    } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+    return bytes.toFixed(1)+' '+units[u];
+  }
+});
+
+ var cfr=colleg_faq_row;
+
+    $(document).on('click','#btn_add_college_faqus_row',function(){
+      var html='';
+
+      html+='<tr id="tr' + cfr + '">';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="college_faqus['+cfr+'][ques]" aria-describedby="college_faqus" placeholder="Question" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<textarea class="form-control" name="college_faqus['+cfr+'][ans]" aria-describedby="college_faqus" placeholder="Answer" rows="5"></textarea>';
+      html+='</td>';
+      html+='<td>';
+      html+='<button type="button" class="btn btn-sm btn-danger" onclick="$(\'#tr' + cfr + '\').remove()"><i class="fa fa-minus"></i></button>';
+      html+='</td>';
+      html+='</tr>';
+
+      $('#form_college_faqus_table tbody').append(html);
+
+      cfr++;
+    });
+
+
+
+    var cfr2=colleg_placement_faq_row;
+
+    $(document).on('click','#btn_add_college_placement_faqus_row',function(){
+      var html='';
+
+      html+='<tr id="tr2' + cfr2 + '">';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="college_placement_faqs['+cfr2+'][ques]" aria-describedby="college_faqus" placeholder="Question" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<textarea class="form-control" name="college_placement_faqs['+cfr2+'][ans]" aria-describedby="college_faqus" placeholder="Answer" rows="5"></textarea>';
+      html+='</td>';
+      html+='<td>';
+      html+='<button type="button" class="btn btn-sm btn-danger" onclick="$(\'#tr2' + cfr2 + '\').remove()"><i class="fa fa-minus"></i></button>';
+      html+='</td>';
+      html+='</tr>';
+
+      $('#form_college_placement_faqus_table tbody').append(html);
+
+      cfr2++;
+    });
+
+
+    var cfr3=colleg_scholarship_faq_row;
+
+    $(document).on('click','#btn_add_college_scholarship_faqus_row',function(){
+      var html='';
+
+      html+='<tr id="tr3' + cfr3 + '">';
+      html+='<td>';
+      html+='<input type="text" class="form-control" name="college_scholarship_faqs['+cfr3+'][ques]" aria-describedby="college_faqus" placeholder="Question" value="">';
+      html+='</td>';
+      html+='<td>';
+      html+='<textarea class="form-control" name="college_scholarship_faqs['+cfr3+'][ans]" aria-describedby="college_faqus" placeholder="Answer" rows="5"></textarea>';
+      html+='</td>';
+      html+='<td>';
+      html+='<button type="button" class="btn btn-sm btn-danger" onclick="$(\'#tr3' + cfr3 + '\').remove()"><i class="fa fa-minus"></i></button>';
+      html+='</td>';
+      html+='</tr>';
+
+      $('#form_college_scholarship_faqus_table tbody').append(html);
+
+      cfr2++;
+    });
+
+   

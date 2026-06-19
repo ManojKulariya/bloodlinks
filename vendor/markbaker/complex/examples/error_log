@@ -1,0 +1,36 @@
+[23-Apr-2026 07:45:27 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:27 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:27 UTC] PHP Fatal error:  Uncaught Error: Class "Complex\Complex" not found in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 9
+[23-Apr-2026 07:45:28 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:28 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:28 UTC] PHP Fatal error:  Uncaught Error: Class "Complex\Complex" not found in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 9
+[23-Apr-2026 07:45:29 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:29 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:29 UTC] PHP Fatal error:  Uncaught Error: Class "Complex\Complex" not found in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 9
+[23-Apr-2026 07:45:32 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:32 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 6
+[23-Apr-2026 07:45:32 UTC] PHP Fatal error:  Uncaught Error: Class "Complex\Complex" not found in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testOperations.php on line 9
+[23-Apr-2026 07:45:32 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testFunctions.php on line 5
+[23-Apr-2026 07:45:32 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testFunctions.php on line 5
+[23-Apr-2026 07:45:32 UTC] PHP Fatal error:  Uncaught Error: Class "Complex\Complex" not found in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testFunctions.php:43
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/testFunctions.php on line 43
+[23-Apr-2026 07:45:33 UTC] PHP Warning:  include(/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/complexTest.php on line 5
+[23-Apr-2026 07:45:33 UTC] PHP Warning:  include(): Failed opening '/home/bloodlinks/public_html/vendor/markbaker/complex/examples/../vendor/autoload.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/complexTest.php on line 5
+[23-Apr-2026 07:45:33 UTC] PHP Fatal error:  Uncaught Error: Class "Complex\Complex" not found in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/complexTest.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/markbaker/complex/examples/complexTest.php on line 9

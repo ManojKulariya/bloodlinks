@@ -1,0 +1,48 @@
+[23-Apr-2026 07:42:43 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\IComparable" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php on line 10
+[23-Apr-2026 07:42:44 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\IComparable" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php on line 10
+[23-Apr-2026 07:42:45 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\IComparable" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php on line 10
+[23-Apr-2026 07:42:48 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\IComparable" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/RichText.php on line 10
+[23-Apr-2026 07:42:49 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\RichText\ITextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php on line 7
+[23-Apr-2026 07:42:49 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\RichText\ITextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php on line 7
+[23-Apr-2026 07:42:51 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\RichText\ITextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php on line 7
+[23-Apr-2026 07:42:54 UTC] PHP Fatal error:  Uncaught Error: Interface "PhpOffice\PhpSpreadsheet\RichText\ITextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/TextElement.php on line 7
+[23-Apr-2026 07:42:54 UTC] PHP Fatal error:  Uncaught Error: Class "PhpOffice\PhpSpreadsheet\RichText\TextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php on line 8
+[23-Apr-2026 07:42:55 UTC] PHP Fatal error:  Uncaught Error: Class "PhpOffice\PhpSpreadsheet\RichText\TextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php on line 8
+[23-Apr-2026 07:42:56 UTC] PHP Fatal error:  Uncaught Error: Class "PhpOffice\PhpSpreadsheet\RichText\TextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php on line 8
+[23-Apr-2026 07:42:59 UTC] PHP Fatal error:  Uncaught Error: Class "PhpOffice\PhpSpreadsheet\RichText\TextElement" not found in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/RichText/Run.php on line 8

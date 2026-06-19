@@ -1,0 +1,16 @@
+[23-Apr-2026 07:44:58 UTC] PHP Fatal error:  Uncaught Error: Interface "Psr\SimpleCache\CacheException" not found in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php on line 11
+[23-Apr-2026 07:44:59 UTC] PHP Fatal error:  Uncaught Error: Interface "Psr\SimpleCache\CacheException" not found in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php on line 11
+[23-Apr-2026 07:45:00 UTC] PHP Fatal error:  Uncaught Error: Interface "Psr\SimpleCache\CacheException" not found in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php on line 11
+[23-Apr-2026 07:45:03 UTC] PHP Fatal error:  Uncaught Error: Interface "Psr\SimpleCache\CacheException" not found in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bloodlinks/public_html/vendor/psr/simple-cache/src/InvalidArgumentException.php on line 11
