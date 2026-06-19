@@ -9,7 +9,7 @@
 
 </div>
 <div style="padding: 10px;background-color:#FAF9FB;">
-<p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:0in;font-size:11.0pt;font-family:"Calibri","sans-serif";'><span style='font-family:"Bookman Old Style","serif";'>Effective date: 25 May 24</span></p>
+<h2 style='color:black;'>Effective date: 25 May 24</h2>
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:0in;font-size:11.0pt;font-family:"Calibri","sans-serif";'><span style='font-family:"Bookman Old Style","serif";'>Last updated on: 25 May 24</span></p>
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:0in;font-size:11.0pt;font-family:"Calibri","sans-serif";'><strong><span style='font-family:"Bookman Old Style","serif";'>1. GENERAL</span></strong></p>
 <p style='margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;margin-left:21.3pt;font-size:11.0pt;font-family:"Calibri","sans-serif";'><span style='font-family:"Bookman Old Style","serif";'>a.&nbsp;This Website and mobile application with the URL of bloodlinks.in (&quot;Website/Site&quot;) is operated by <strong><span style="color:red;">Vita HEE Care Trust</span></strong>(&apos;We/Our/Us&quot;). We are committed to protecting and respecting your privacy. We collect your personal and health information and process your personal data in accordance with the IT Act, 2000 (21 of 2000) and other national and state laws that relate to the processing of personal data. Please read the following carefully to understand our views and practices regarding your personal data.</span></p>

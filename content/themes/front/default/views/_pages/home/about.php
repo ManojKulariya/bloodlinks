@@ -25,7 +25,7 @@
                <div class="col-lg-4 col-sm-4">
                 <div class="timeline-heading-3">
                                    <h4 style="color:white;">Problems</h4>
-                 <h1 style="color:white;">Blood Donation in numbers</h1>
+                 <h2 style="color:white;">Blood Donation in numbers</h2>
                  </div>
                  <!-- <p>All the team members comprise of various groups including donors, blood bankers, vendors, hospitals ,Ngos etc </p>
                  <a href="#" class="btn">Explore New</a> -->
@@ -192,7 +192,7 @@
 
 <div class="simple-head-4">
                                    <h4 style="color:black;">Solution</h4>
-                 <h1 style="color:black;">Blood Links Advantage</h1>
+                 <h2 style="color:black;">Blood Links Advantage</h2>
                  </div>
                  <!-- <p>All the team members comprise of various groups including donors, blood bankers, vendors, hospitals ,Ngos etc </p>
                  <a href="#" class="btn">Explore New</a> -->
@@ -332,7 +332,7 @@ id="new-card-22">
 
          <div class="container-1">
    <div class="row-1">
-<h1>Join the Cause</h1>
+<h2>Join the Cause</h2>
 <hr class="join-hr">
 <p class="bldlin-p">Bloodlinks is a unique system that makes it possible to find a blood bank or hospital in a particular area in real time. 
 The main purpose is to make it easier to find blood banks and hospitals to donate blood and request blood. The Bloodlinks app and web platform allow users to search for blood banks and hospitals online to get blood and donate blood from trustworthy blood banks. It also helps blood banks to accept blood, process blood donations, blood requests and issue blood to people in need through its blood bank management software. 
@@ -488,7 +488,7 @@ We are reaching out to the community to ask for their help in registering donors
          		<div class="col-md-12 text-center pt-30 pb-30">
          			<div class="appointment-area">
          			<h6>Start Donating</h6>
-         			<h1>CALL NOW: 333 555 9090</h1>
+         			<h2>CALL NOW: 333 555 9090</h2>
          			<div class="appo-text">
          			<a href=""><i class="fa fa-map-marker" aria-hidden="true"></i>New York - 1075 Firs Avenue</a>
          			<a href="" class="ml-5"><i class="fa fa-envelope" aria-hidden="true"></i>donate@gmail.com</a>

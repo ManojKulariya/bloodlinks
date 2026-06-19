@@ -25,11 +25,11 @@
 
 </div>
 
-<h5>1.	Create an Appointment</h5>
+<h2>1.	Create an Appointment</h2>
 <p>Arrange a perfect slot for you that suits your availability which is convenient to you.</p>
 
 
-<h5>2.	Consume a Balance Diet </h5>
+<h2>2.	Consume a Balance Diet </h2>
 <ul class="prepro-ul">
     <li><p>Eat some foods that have rich source of iron like dark green leafy vegetables, oats, tofu, and dried fruits.</p></li>
     <li><p>Make sure to eat properly and drink lots of fluids the night before your donation, so you have enough energy to give to the cause.</p> </li>
@@ -40,18 +40,18 @@
 
 <p><span style="font-size:20px;">3.</span>Make sure to eat properly and drink lots of fluids the night before your donation so you have enough energy to give to the cause.</p> -->
 
-<h4>Bonus Tips before Donation </h4>
+<h2>Bonus Tips before Donation </h2>
 <p>Before donating blood, make sure you don't take an aspirin for two days. Learn More about platelet donations. By donating with a friend, you can do twice as much good! Download the bloodLinks app to receive appointment reminders, location finder and much more. </p>
 
-<h4>Day of Donation:</h4>
+<h2>Day of Donation:</h2>
 <p>After taking proper rest, its time to reach at the location with your required ID proof and other medication prescription if any. </p>
 
 
-<h4> Bonus Tips at the Day of Donation:</h4>
+<h2> Bonus Tips at the Day of Donation:</h2>
 <p>Before your appointment, drink 500 ML of water (or other nonalcoholic beverage) or eat a nutritious meal. Avoid fatty foods like hamburgers, French fries, or ice cream. Choose a shirt with sleeves that you can roll up above your elbows. Let us know if you have a favorite arm or vein from which you've received successful blood draws in the past. Donating is also a perfect time to listen to music, talk to other donors, or read.</p>
 
 
-<h4>Post Donation:</h4>
+<h2>Post Donation:</h2>
 <p>Have a nutritious meal post donating your blood.
 Keep yourself hydrated and avoid liquor for the next 1 day.</p>
 

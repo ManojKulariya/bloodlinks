@@ -23,6 +23,7 @@
 
         <title><?= !empty($seo->meta_title) ? $seo->meta_title : Events::trigger('the_title', $title, 'string'); ?></title>
     <link rel="icon" href="<?php echo $favicon_image;?>">
+    <link rel="canonical" href="<?= current_url(); ?>" />
   	<?php echo @$metadata; ?>
 
   	<?php echo @$css_files; ?>

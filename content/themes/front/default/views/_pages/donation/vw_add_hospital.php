@@ -26,7 +26,7 @@
    <div class="container">
       <div class="row">
          <div class="col-md-12">
-            <h3 class="text-center find-h1-7">Register Hospital</h3>
+            <h1 class="text-center find-h1-7" style="color: #000;">Register Hospital</h1>
             <hr class="hospital-hr">
          </div>
       </div>

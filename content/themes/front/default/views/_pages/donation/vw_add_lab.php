@@ -58,7 +58,7 @@ $base_url = 'https://bloodlinks.in';
    <div class="col-xl-6">
       <div class="card">
          <div class="card-header text-center">
-            <h3 class="card-title">Register Lab </h3>
+            <h1 class="card-title" style="color: #000;">Register Lab </h1>
             <!-- <div class="btn-group" style="float: right;">
                <a href="<?php echo $base_url; ?>/labs" data-toggle="tooltip" title="" class="btn btn-sm btn-default" data-original-title="Add New"><i class="fas fa-reply fw"></i></a>
                </div> -->

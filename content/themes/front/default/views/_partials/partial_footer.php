@@ -222,7 +222,7 @@
     <section class="flex-content padding_1x">
       <h3>Download App </h3>
       <div class="imgg-a" >
-  <a href="https://play.google.com/store/apps/details?id=com.bloodlinkapp.in" target="_main"><img src="<?php echo base_url('uploads/app/googly.png');?>"></a>
+  <a href="https://play.google.com/store/apps/details?id=com.bloodlinkapp.in" target="_main"><img src="<?php echo base_url('uploads/app/googly.png');?>" alt="Google Play"></a>
 </div>
       <!-- <a href="#">Research</a>
       <a href="#">Experts</a>
@@ -231,7 +231,7 @@
     <section class="flex-content padding_1x">
       <!-- <h3>Blood links logo</h3> -->
       <div class="logo-img5">
-      <img src="<?php echo base_url('uploads/app/image-logo-ay.png');?>" >
+      <img src="<?php echo base_url('uploads/app/image-logo-ay.png');?>" alt="logo" >
       </div>
       <p>Blood Links is an platform that helps to streamline blood donation and blood request which puts the power to save a life in the palm of your hand. </p>
 

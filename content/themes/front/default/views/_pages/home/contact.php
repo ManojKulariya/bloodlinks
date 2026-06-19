@@ -33,7 +33,7 @@
               <div class="row">
                   <div class="col-lg-7">
                     <div>
-                        <h4>Get In Touch</h4>
+                        <h2>Get In Touch</h2>
                         <p>Please use this form to contact us regarding any questions, comments or concerns you may have.<p>
                     </div>
                       <div class="row mb-3">

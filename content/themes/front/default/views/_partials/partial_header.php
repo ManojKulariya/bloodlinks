@@ -276,7 +276,7 @@
 <div class="col-lg-8 col-md-8 col-sm-8 col-6">   
 <div class="nav-sec nav-sec-small"> 
   <ul><li class="">
-        <a href="https://play.google.com/store/apps/details?id=com.bloodlink" target="_main" id="android-icon"><img src="<?php echo base_url('uploads/app/playstore.png');?>" alt="" class="img-app-3">Download Our App   <span class="sr-only">(current)</span></a>
+        <a href="https://play.google.com/store/apps/details?id=com.bloodlink" target="_main" id="android-icon"><img src="<?php echo base_url('uploads/app/playstore.png');?>" alt="Google Play" class="img-app-3">Download Our App   <span class="sr-only">(current)</span></a>
       </li>
  <li><a class="bloodbank-login-a" href="<?php echo base_url('admin');?>" class="nav-link nav-sec-gaytri"> Blood Bank Login</a></li> 
 

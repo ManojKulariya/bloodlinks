@@ -27,7 +27,7 @@
 
 <div class=" col-lg-6 col-md-6 col-sm-12 col-12">
 
-<h5>Explore The Process of Blood Donation </h5>
+<h2>Explore The Process of Blood Donation </h2>
 <p>The steps and tests your blood goes through ensure our blood supply is as safe as possible, helping as many people as possible.</p>
 </div>
 

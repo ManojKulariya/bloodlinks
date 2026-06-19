@@ -7,7 +7,7 @@
    }
 </style>
 
-<!-- <div class="image-contactus-banner">
+<div class="image-contactus-banner">
    <div class="container">
       <div class="row">
          <div class="col-md-12">
@@ -16,7 +16,7 @@
          </div>
       </div>
    </div>
-</div> -->
+</div>
 
 <section class="sign-in-page my-5">
    <div class="container">

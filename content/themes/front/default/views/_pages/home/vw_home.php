@@ -336,11 +336,10 @@
    <div class="container-fluid container-3">
       <img src="<?php echo base_url('uploads/app/mobile-app copy.jpg');?>" class="d-block w-100" id="img-id" alt="..." style="max-height: 600px;">
       <div class="text-block">
-         <h2 style="color:#fffff !important;">Donate Blood And Save Lives with</h2>
-         <h1>Bloodlinks App!</h1>
+         <h1 style="color:#fffff !important;">Donate Blood And Save Lives with Bloodlinks App!</h1>
          <p class=para-1>People often encounter difficulty finding the right blood from the right blood. The purpose of BloodLinks was to provide  details about the accessibility of blood banks, hospitals when needed.</p>
          <div class="imgg" >
-            <a href="https://play.google.com/store/apps/details?id=com.bloodlinkapp.in" target="_main"><img src="<?php echo base_url('uploads/app/googly.png');?>"></a>
+            <a href="https://play.google.com/store/apps/details?id=com.bloodlinkapp.in" target="_main"><img src="<?php echo base_url('uploads/app/googly.png');?>" alt="Google Play"></a>
          </div>
       </div>
    </div>
@@ -348,7 +347,7 @@
 <!-- ayushii -->
 <div class="container-1">
    <div class="row-1">
-      <h1>Join the Cause</h1>
+      <h2>Join the Cause</h2>
       <hr class="join-hr">
       <p>Join our cause and help us save more lives. Everyone should have the right to get blood.
       </p>
@@ -426,7 +425,7 @@
    </section> -->
 <section class="pt-0 filter main_heading my-5">
    <div class="text-center sec">
-      <h1 class="our-aim-h1">Our Aim</h1>
+      <h2 class="our-aim-h2">Our Aim</h2>
       <hr class="hr-ouraim">
    </div>
    <div class="container container-aim">
@@ -519,7 +518,7 @@
 <!-----------faqs part-------------------------->
 <section class="faqs-sec">
    <div class="text-center" id="text-part">
-      <h1>Frequently Asked Questions</h1>
+      <h2>Frequently Asked Questions</h2>
       <hr class="hr-line">
    </div>
    <div class="container" style="padding:46px;">
@@ -912,28 +911,28 @@
          <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
                <div class="testimonial4_slide">
-                  <img src="<?php echo base_url('uploads/app/wom1.jpg');?>" class="img-circle img-responsive" />
+                  <img src="<?php echo base_url('uploads/app/wom1.jpg');?>" class="img-circle img-responsive"  alt="Testimonial"/>
                   <p>" We don't have to worry anymore for our emergencies. We simply request blood and get it from nearest blood bank. " </p>
                   <h4>Alisha (Rajkot, Gujarat)</h4>
                </div>
             </div>
             <div class="carousel-item">
                <div class="testimonial4_slide">
-                  <img src="<?php echo base_url('uploads/app/men1.jpg');?>" class="img-circle img-responsive" />
+                  <img src="<?php echo base_url('uploads/app/men1.jpg');?>" class="img-circle img-responsive"  alt="Testimonial1"/>
                   <p>" Our hospital often uses Blood Links to handle blood transfusion emergencies. It is truly a great service. " </p>
                   <h4>Anubhav Choudhary (Meerut, Uttar Pradesh)</h4>
                </div>
             </div>
             <div class="carousel-item">
                <div class="testimonial4_slide">
-                  <img src="<?php echo base_url('uploads/app/wom2.jpg');?>" class="img-circle img-responsive" />
+                  <img src="<?php echo base_url('uploads/app/wom2.jpg');?>" class="img-circle img-responsive"  alt="Testimonial2"/>
                   <p>" A member of my family needed blood but his blood type is quite hard to find. Blood Links helped us figure it out in no time ! "</p>
                   <h4>Nikita Sharma (Bangalore, Karnataka)</h4>
                </div>
             </div>
             <div class="carousel-item">
                <div class="testimonial4_slide">
-                  <img src="<?php echo base_url('uploads/app/men2.jpg');?>" class="img-circle img-responsive" />
+                  <img src="<?php echo base_url('uploads/app/men2.jpg');?>" class="img-circle img-responsive"  alt="Testimonial3"/>
                   <p>" I regularly donate my blood to answer Blood Links blood requests. Very proud to contribute saving lives ! " </p>
                   <h4>Jai Agnihotri(Mumbai, Maharastra)</h4>
                </div>

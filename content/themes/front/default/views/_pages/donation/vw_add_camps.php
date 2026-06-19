@@ -67,7 +67,7 @@ echo '<script>alert("You Form submitted successfully")</script>';
          <div class="col-xl-9 col-lg-7">
              <div class="contact-wrapper">
                <header class="login-cta">
-                  <h2>Register Blood Camp</h2>
+                  <h1 style="color: #000; text-align: center;">Register Blood Camp</h1>
                   <hr class="bloodbank-hrr">
                </header>
                <form action = "<?php $_PHP_SELF ?>" method = "POST" class="new-register">

@@ -317,7 +317,7 @@
       <p class=para-1>People often encounter difficulty finding the right blood from the right blood. The purpose of BloodLinks was to provide  details about the accessibility of blood banks, hospitals as and when needed.</p>
 
 <div class="imgg" >
-  <a href=""><img src="<?php echo base_url('uploads/app/googly.png');?>"></a>
+  <a href=""><img src="<?php echo base_url('uploads/app/googly.png');?>" alt="Google Play"></a>
 </div>
       </div>
       
