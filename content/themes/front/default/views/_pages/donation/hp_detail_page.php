@@ -23,30 +23,30 @@
 
 
 <div class="box-my-my">
-<h5>Category  </h5>
+<h2>Category  </h2>
 <P><?php echo $detail_data[0]['category'] ?></P>
 
-<h5>Phone  </h5>
+<h2>Phone  </h2>
 <P><?php echo $detail_data[0]['phone'] ?></P>
 
-<h5>Email  </h5>
+<h2>Email  </h2>
 <P><?php echo $detail_data[0]['email_1'] ?> <?php echo $detail_data[0]['email_2'] ?> <?php echo $detail_data[0]['email_3'] ?></P>
 
 
-<h5>Address  </h5>
+<h2>Address  </h2>
 <P><?php echo $detail_data[0]['address'] ?></P>
 
-<h5>City  </h5>
+<h2>City  </h2>
 <P><?php echo $detail_data[0]['city'] ?></P>
 
-<h5>State  </h5>
+<h2>State  </h2>
 <P><?php echo $detail_data[0]['state'] ?></P>
 
-<h5>Pincode  </h5>
+<h2>Pincode  </h2>
 <P><?php echo $detail_data[0]['pincode'] ?></P>
 
 
-<h5>Review  </h5>
+<h2>Review  </h2>
 <P><?php echo $detail_data[0]['review'] ?></P>
 
 
