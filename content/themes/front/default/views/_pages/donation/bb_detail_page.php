@@ -185,18 +185,6 @@
     color: #fff;
 }
 
-.btn-call {
-    background: #28a745;
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-}
-
-.btn-call:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-    color: #fff;
-}
-
 .btn-email {
     background: #fff;
     color: #b40028;
@@ -505,7 +493,7 @@
         <!-- Action Buttons -->
         <div class="action-buttons-section">
             <div class="row">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-6 col-md-6">
                     <?php if(!empty($detail_data[0]['latitude']) && !empty($detail_data[0]['longitude'])): ?>
                         <button class="action-btn btn-directions" onclick="getDirections(<?php echo $detail_data[0]['latitude']; ?>, <?php echo $detail_data[0]['longitude']; ?>)">
                             <i class="fas fa-directions"></i>
@@ -513,22 +501,7 @@
                         </button>
                     <?php endif; ?>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <?php if(!empty($detail_data[0]['helpline']) || !empty($detail_data[0]['contact_no']) || !empty($detail_data[0]['mobile'])): ?>
-                        <a href="tel:<?php echo htmlspecialchars($detail_data[0]['helpline'] ?? $detail_data[0]['contact_no'] ?? $detail_data[0]['mobile']); ?>" class="action-btn btn-call">
-                            <i class="fas fa-phone-alt"></i>
-                            Call Now
-                        </a>
-                    <?php endif; ?>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <?php if(!empty($detail_data[0]['email'])): ?>
-                        <a href="mailto:<?php echo htmlspecialchars($detail_data[0]['email']); ?>" class="action-btn btn-email">
-                            <i class="fas fa-envelope"></i>
-                            Send Email
-                        </a>
-                    <?php endif; ?>
-                </div>
+                
             </div>
         </div>
     </div>
